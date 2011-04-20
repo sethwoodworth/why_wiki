@@ -7,7 +7,7 @@ def root(request):
     """
     return render_to_response('index.html', {})
 
-def user_submit(request):
+def user_submit(request, username):
     """
     Do api calls and return a page of stats.
     """
