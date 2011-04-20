@@ -1,3 +1,4 @@
+import os
 # Django settings for why_wiki project.
 
 DEBUG = True
