@@ -7,7 +7,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
     # Example:
     (r'^$', 'wiki_foo.views.root'),
-    (r'^(?P<username>[a-z0-9. ]*)$', 'wiki_foo.views.user_submit'),
+    (r'^(?P<username>[A-Za-z0-9. ]*)$', 'wiki_foo.views.user_submit'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     #(r'^admin/doc/', include('django.contrib.admindocs.urls')),
