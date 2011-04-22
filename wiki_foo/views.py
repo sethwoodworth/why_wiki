@@ -43,11 +43,13 @@ def user_submit(request, username):
 
 
     user = {
+        "username": username,
         "created": meta_data['query']['users'][0]['registration'],
         "editcount": meta_data['query']['users'][0]['editcount'],
         "gender": meta_data['query']['users'][0]['gender'],
         "userid": meta_data['query']['users'][0]['userid'],
         "active": False,
+
         }
     
     edits = []
@@ -65,4 +67,4 @@ def user_submit(request, username):
     if (datetime.utcnow() - fifth_naive).days > 31:
         user['active'] == True
 
-    return render(request, 'stats.html', {'data': {"user": user, "edits": edits}})
+    return render(request, 'stats.html', {"user": user, "edits": edits})

@@ -15,6 +15,12 @@ background-image: url("https://openhatch.org/static/images/motif-eee.png");
 p, h3, form {
     margin: 0 40px 30px 40px;
     }
+.active{
+    color:green;
+    }
+.inactive{
+    color:red;
+    }
 input {
     width: 500px;
     height: 53px;
@@ -38,8 +44,20 @@ function OnSubmitForm()
 
 </head>
 <body>
-{{ data.user }}
+<div id="content">
+  <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
+      {% csrf_token %}
+      <input type="text" value = "{{ user.username }}"/>
+      <input type="submit" value="Check!"/>
+  </form>
+
+<p>
+{{ user.username }} <strong class={% if active %} "active">is {% else %}"inactive">is not {% endif %}</strong> an active editor.
+</p>
+<hr />
+{{ user }}
 <br/>
-{{ data.edits }}
+{{ edits }}
 <br/>
-{{ data.fifth }}
+
+</div>
