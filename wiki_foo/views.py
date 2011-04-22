@@ -67,4 +67,9 @@ def user_submit(request, username):
     if (datetime.utcnow() - fifth_naive).days > 31:
         user['active'] == True
 
-    return render(request, 'stats.html', {"user": user, "edits": edits})
+    last_edit_aware = dateutil.parser.parse(edits[0]['timestamp'])
+    last_naive = last_edit_aware.replace(tzinfo=None)
+    last_edit = (datetime.utcnow() - last_naive).days
+
+
+    return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit})
