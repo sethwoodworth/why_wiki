@@ -48,6 +48,7 @@ function OnSubmitForm()
   </p>
   
   <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
+      {% csrf_token %}
       <input type="text"/>
       <input type="submit" value="Check!"/>
   </form>

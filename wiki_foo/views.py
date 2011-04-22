@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
 
 import urllib
 import dateutil
@@ -12,6 +13,7 @@ def root(request):
     """
     return render_to_response('index.html', {})
 
+@csrf_protect
 def user_submit(request, username):
     """
     Do api calls and return a page of stats.
