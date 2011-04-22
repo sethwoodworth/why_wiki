@@ -27,7 +27,17 @@ input {
   </style>
   <link href='http://fonts.googleapis.com/css?family=Raleway:100' rel='stylesheet' type='text/css'>
 
+<script type="text/javascript">
+function OnSubmitForm()
+{
+  document.myform.action = document.myform[0].value;
+  return true;
+}
+</script>
+
+
 </head>
+
 
 <body>
   <div id="content">
@@ -36,9 +46,10 @@ input {
   <p>
     Wikipedia is our project, yours and mine, so we want to encourage participation! [X webapp] is here to help you contribute by letting you know when you are being an active editor and when you're not with lots of fun statistics, etc etc blah blah... enter a Wikipedia username below to get started! 
   </p>
-  <form>
+  
+  <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
       <input type="text"/>
       <input type="submit" value="Check!"/>
   </form>
-  </div>
+</div>
 
