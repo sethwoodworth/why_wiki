@@ -30,6 +30,7 @@ def user_submit(request, username):
 
     resp = urllib.urlopen(url_meta)
     meta_data = eval( resp.read() )
+    print meta_data
     resp.close()
 
     if meta_data['query']['users'][0].has_key('missing'):
@@ -39,6 +40,7 @@ def user_submit(request, username):
     
     resp = urllib.urlopen(url_edits)
     edits_data = eval( resp.read() )
+    print edits_data
     resp.close()
 
 
@@ -61,10 +63,11 @@ def user_submit(request, username):
             }
         edits.append(e)
 
-    # is active?
-    fifth_edit_aware = dateutil.parser.parse(edits[4]['timestamp'])
-    fifth_naive = fifth_edit_aware.replace(tzinfo=None)
-    if (datetime.utcnow() - fifth_naive).days > 31:
-        user['active'] == True
+    if len(edits) >=5:
+        # is active?
+        fifth_edit_aware = dateutil.parser.parse(edits[4]['timestamp'])
+        fifth_naive = fifth_edit_aware.replace(tzinfo=None)
+        if (datetime.utcnow() - fifth_naive).days > 31:
+            user['active'] == True
 
     return render(request, 'stats.html', {"user": user, "edits": edits})
