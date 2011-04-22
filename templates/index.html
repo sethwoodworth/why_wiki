@@ -10,8 +10,11 @@ background-image: url("https://openhatch.org/static/images/motif-eee.png");
 }
 #content { 
   width: 700px; margin: auto;
-
   }
+#usernotfound { 
+  width: 700px; margin: auto;
+  }
+
 p, h3, form {
     margin: 0 40px 30px 40px;
     }
@@ -54,9 +57,22 @@ being
 an 
 active editor and when you're not with lots of fun statistics and suggestions on pages that could use your help. 
 </p>
+
+{% if not message %}
 <p>
 Enter a Wikipedia username below to get started! 
+</p>
+{% endif %}
+
+
+{% if message %}
+<div id="usernotfound">
+  <h3>Oh No!</h1>
+  <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
   </p>
+</div>
+{% endif %}
+
   
   <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
       {% csrf_token %}
@@ -65,11 +81,4 @@ Enter a Wikipedia username below to get started!
   </form>
 </div>
 
-{% if message %}
-<div id="user not found">
-  <h3>Oh No!</h1>
-  <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
-  </p>
-</div>
-{% endif %}
 
