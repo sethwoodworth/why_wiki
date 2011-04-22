@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 
 import urllib
+import dateutil
+from dateutil import parser
 
 def root(request):
     """
@@ -35,5 +37,19 @@ def user_submit(request, username):
         "gender": meta_data['query']['users'][0]['gender'],
         "userid": meta_data['query']['users'][0]['userid'],
         }
+    
+    edits = []
+    for edit in edits_data['query']['usercontribs']:
+        e = {
+            'pagename': edit['title'],
+            'timestamp': edit['timestamp'],
+            'comment': edit['comment'],
+            }
+        edits.append(e)
 
-    return render_to_response('stats.html', {'data': {"user": user, "edits": edits_data}})
+    # is active?
+    fifth_edit = dateutil.parser.parse(edits[4]['timestamp'])
+    if fifth_edit - datetime.date
+
+
+    return render_to_response('stats.html', {'data': {"user": user, "edits": edits, 'fifth': fifth_edit}})
