@@ -28,13 +28,19 @@ def user_submit(request, username):
     url_meta = url_base + meta + username
     json = []
 
+    resp = urllib.urlopen(url_meta)
+    meta_data = eval( resp.read() )
+    resp.close()
+
+    if meta_data['query']['users'][0].has_key('missing'):
+        # non-users return json with a 'missing' key
+        # break this method, and render another index, but with an error message
+        return render(request, 'index.html', {'message': True})
+    
     resp = urllib.urlopen(url_edits)
     edits_data = eval( resp.read() )
     resp.close()
 
-    resp = urllib.urlopen(url_meta)
-    meta_data = eval( resp.read() )
-    resp.close()
 
     user = {
         "created": meta_data['query']['users'][0]['registration'],
