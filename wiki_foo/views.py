@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 import urllib
 import dateutil
 from dateutil import parser
+from datetime import datetime
 
 def root(request):
     """
@@ -36,6 +37,7 @@ def user_submit(request, username):
         "editcount": meta_data['query']['users'][0]['editcount'],
         "gender": meta_data['query']['users'][0]['gender'],
         "userid": meta_data['query']['users'][0]['userid'],
+        "active": False,
         }
     
     edits = []
@@ -48,8 +50,9 @@ def user_submit(request, username):
         edits.append(e)
 
     # is active?
-    fifth_edit = dateutil.parser.parse(edits[4]['timestamp'])
-    if fifth_edit - datetime.date
+    fifth_edit_aware = dateutil.parser.parse(edits[4]['timestamp'])
+    fifth_naive = fifth_edit_aware.replace(tzinfo=None)
+    if (datetime.utcnow() - fifth_naive).days > 31:
+        user['active'] == True
 
-
-    return render_to_response('stats.html', {'data': {"user": user, "edits": edits, 'fifth': fifth_edit}})
+    return render_to_response('stats.html', {'data': {"user": user, "edits": edits}})
