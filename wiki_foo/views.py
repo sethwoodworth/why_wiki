@@ -18,19 +18,17 @@ def root(request):
 @csrf_protect
 def user_submit(request, username):
     """
-    Do api calls and return a page of stats.
+    Api calls for user meta data and 100 edits. Parse this and return a page of stats.
     """
     url_base    = "http://en.wikipedia.org/w/api.php?action=query&format=json"
-    edits   = "&list=usercontribs&uclimit=5&ucnamespace=0&ucuser="
     meta    = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
+    edits   = "&list=usercontribs&uclimit=100&ucnamespace=0&ucuser="
 
-    url_edits = url_base + edits + username
     url_meta = url_base + meta + username
-    json = []
+    url_edits = url_base + edits + username
 
     resp = urllib.urlopen(url_meta)
     meta_data = eval( resp.read() )
-    print meta_data
     resp.close()
 
     if meta_data['query']['users'][0].has_key('missing'):
@@ -40,10 +38,9 @@ def user_submit(request, username):
     
     resp = urllib.urlopen(url_edits)
     edits_data = eval( resp.read() )
-    print edits_data
     resp.close()
 
-
+    # clean up metadata
     user = {
         "username": username,
         "created": meta_data['query']['users'][0]['registration'],
@@ -51,9 +48,9 @@ def user_submit(request, username):
         "gender": meta_data['query']['users'][0]['gender'],
         "userid": meta_data['query']['users'][0]['userid'],
         "active": False,
-
         }
     
+    # clean up edits
     edits = []
     for edit in edits_data['query']['usercontribs']:
         e = {
