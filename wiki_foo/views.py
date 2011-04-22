@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, render_to_response, get_object_or_404
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
@@ -13,7 +13,7 @@ def root(request):
     """
     Main page rendering and setup. May contain changing info (recent users) in {} later.
     """
-    return render_to_response('index.html', {}, context_instance=RequestContext(request))
+    return render(request, 'index.html', {})
 
 @csrf_protect
 def user_submit(request, username):
@@ -59,4 +59,4 @@ def user_submit(request, username):
     if (datetime.utcnow() - fifth_naive).days > 31:
         user['active'] == True
 
-    return render_to_response('stats.html', {'data': {"user": user, "edits": edits}}, context_instance=RequestContext(request))
+    return render(request, 'stats.html', {'data': {"user": user, "edits": edits}})
