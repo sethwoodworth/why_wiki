@@ -52,10 +52,10 @@ function OnSubmitForm()
   </form>
 
 <p>
-{{ user.username }} <strong class={% if active %} "active">is {% else %}"inactive">is not {% endif %}</strong> an active editor.
+{{ user.username }} <strong class={% if user.active %} "active">is {% else %}"inactive">is not {% endif %}</strong> an active editor.
 </p>
 <p>
-Your last edit was <b>{{ last_edit }}</b> days ago
+Their last edit was <b>{{ last_edit }}</b> days ago
 </p>
 <hr />
 {{ user }}

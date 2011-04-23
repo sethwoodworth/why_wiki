@@ -64,8 +64,8 @@ def user_submit(request, username):
         # is active?
         fifth_edit_aware = dateutil.parser.parse(edits[4]['timestamp'])
         fifth_naive = fifth_edit_aware.replace(tzinfo=None)
-        if (datetime.utcnow() - fifth_naive).days > 31:
-            user['active'] == True
+        if (datetime.utcnow() - fifth_naive).days < 31:
+            user['active'] = True
 
     last_edit_aware = dateutil.parser.parse(edits[0]['timestamp'])
     last_naive = last_edit_aware.replace(tzinfo=None)
