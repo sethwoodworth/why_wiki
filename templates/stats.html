@@ -60,7 +60,11 @@ Your last edit was <b>{{ last_edit }}</b> days ago
 <hr />
 {{ user }}
 <br/>
-{{ edits }}
+<ul>
+{% for edit in edits %}
+    <li>{{ edit }}</li>
+{% endfor %}
+</ul>
 <br/>
 
 </div>
