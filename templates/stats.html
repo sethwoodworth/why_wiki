@@ -62,7 +62,7 @@ Their last edit was <b>{{ last_edit }}</b> days ago
 <br/>
 <ul>
 {% for edit in edits %}
-    <li>{{ edit }}</li>
+    <li><a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} : {{ edit.comment }}</li>
 {% endfor %}
 </ul>
 <br/>
