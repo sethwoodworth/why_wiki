@@ -10,6 +10,9 @@
 
 <p>
 {{ user.username }} <strong class={% if user.active %} "active">is {% else %}"inactive">is not {% endif %}</strong> an active editor.
+{% if not user.active %}
+<br>All you need are five edits a month to be an active editor! Anyone can do it!
+{% endif %}
 </p>
 <p>
 Their last edit was <b>{{ last_edit }}</b> days ago
