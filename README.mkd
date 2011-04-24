@@ -3,9 +3,9 @@ Edit moar!
 
 Easy to do (with data on hand)
 ========
-+ <strike>days since last edit</strike> (have)
++ days since last edit (have) ✓
 - edits in last month
-+ <strike>total edits</strike>
++ total edits ✓
 - list of recently edited pages
 - is blocked?
 - how many days until you have to edit again (to keep stated goal, currently 5/mo)
@@ -13,15 +13,15 @@ Easy to do (with data on hand)
 Needs all a user's edits
 =================
 ### Easier ###
-- edits per month //bias for n months?
-- your edit frequency //day, month, year? --> edits per month //graphable
-- Full list of pages you've edited //list of pages not edited
+- edits per month (bias for n months?)
+- your edit frequency (day, month, year? --> edits per month //graphable)
+- Full list of pages you've edited
 - Common categories of pages you've edited
-- what % of edits have comment // only show if below threshold ?
-- pagination of edit history //semi-off-topic
-- pages created
-- number of comment edits //currently not pulling comment edits
-- days in a row edited w/o breaking the chain (http://calendaraboutnothing.com/) //achievement :D
+- what % of edits have comment (only show if below threshold?)
+- pagination of edit history (semi-off-topic)
+- # of pages created
+- number of comment page edits //currently not pulling comment edits
+- days in a row edited w/o breaking the chain (http://calendaraboutnothing.com/) (achievement :D)
 
 ### Harder ###
 - changes edited/reverted // +1! //possibly difficult //update: Really difficult
