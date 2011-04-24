@@ -36,7 +36,7 @@ def user_submit(request, username):
     if meta_data['query']['users'][0].has_key('missing'):
         # non-users return json with a 'missing' key
         # break this method, and render another index, but with an error message
-        return render(request, 'index.html', {'message': True})
+        return render(request, 'index.html', {'message': "usernotfound"})
     
     resp = urllib.urlopen(url_edits)
     edits_data = json.loads( resp.read() )
@@ -44,14 +44,17 @@ def user_submit(request, username):
     resp.close()
 
     # clean up metadata
-    user = {
-        "username": username,
-        "created": dateutil.parser.parse(meta_data['query']['users'][0]['registration']),
-        "editcount": meta_data['query']['users'][0]['editcount'],
-        "gender": meta_data['query']['users'][0]['gender'],
-        "userid": meta_data['query']['users'][0]['userid'],
-        "active": False,
-        }
+    try:
+        user = {
+            "username": username,
+            "created": dateutil.parser.parse(meta_data['query']['users'][0]['registration']),
+            "editcount": meta_data['query']['users'][0]['editcount'],
+            "gender": meta_data['query']['users'][0]['gender'],
+            "userid": meta_data['query']['users'][0]['userid'],
+            "active": False,
+            }
+    except:
+        return render(request, 'index.html', {'message': "baduser"})
     
     # clean up edits
     edits = []
