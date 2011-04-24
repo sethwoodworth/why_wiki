@@ -4,6 +4,7 @@
 <!-- css start -->
 <style>
 body {
+    height: 100%;
     font-family: 'Droid Serif', arial, serif;
     font-size: 20px;
     color: #503e2b;
@@ -21,15 +22,19 @@ input {
     border-radius: 15px;
     }
 p, h3, form {
-    margin: 0 40px 30px 40px;
     }
-h1,h2,h3 {
+h1, h2, h3 {
     font-family: 'Droid Sans', sans;
+    margin: 15px 0px 15px 0px;
     }
 #content {
-    width: 700px; margin: auto;
+    width: 500px;
+    margin: auto;
+    min-height: 100%;
+    position: relative;
     }
 #footer {
+    position: absolute;
     align: center;
     width: 100%;
     margin: 0px;
@@ -44,11 +49,11 @@ h1,h2,h3 {
     }
 #wikipedia {
     float:left;
-    height:110px;
+    height:100px;
     }
 #license {
     float:right;
-    height:110px;
+    height:100px;
     }
 .active{
     color:green;
@@ -94,9 +99,10 @@ function OnSubmitForm()
 {% endblock %}
 </div>
 <div id="footer">
-<div style="margin: auto; width: 600px;"> a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
+<div style="margin: auto; width: 400px; font-size: 12px;"> a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
 </div>
 
+</div> <!-- footer -->
 <div id="icons">
     <div id="wikipedia">
         <a href="http://en.wikipedia.org/">
@@ -112,6 +118,5 @@ function OnSubmitForm()
 
 </div> <!-- icons -->
 
-</div> <!-- footer -->
 </body>
 </html>
