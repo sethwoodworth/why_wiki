@@ -43,7 +43,7 @@ def user_submit(request, username):
     # clean up metadata
     user = {
         "username": username,
-        "created": meta_data['query']['users'][0]['registration'],
+        "created": dateutil.parser.parse(meta_data['query']['users'][0]['registration']),
         "editcount": meta_data['query']['users'][0]['editcount'],
         "gender": meta_data['query']['users'][0]['gender'],
         "userid": meta_data['query']['users'][0]['userid'],
@@ -55,21 +55,24 @@ def user_submit(request, username):
     for edit in edits_data['query']['usercontribs']:
         e = {
             'pagename': edit['title'],
-            'timestamp': edit['timestamp'],
+            'timestamp': dateutil.parser.parse(edit['timestamp']),
             'comment': edit['comment'],
             }
         edits.append(e)
 
     if len(edits) >=5:
         # is active?
-        fifth_edit_aware = dateutil.parser.parse(edits[4]['timestamp'])
+        fifth_edit_aware = edits[4]['timestamp']
         fifth_naive = fifth_edit_aware.replace(tzinfo=None)
         if (datetime.utcnow() - fifth_naive).days < 31:
             user['active'] = True
 
-    last_edit_aware = dateutil.parser.parse(edits[0]['timestamp'])
+    last_edit_aware = edits[0]['timestamp']
     last_naive = last_edit_aware.replace(tzinfo=None)
     last_edit = (datetime.utcnow() - last_naive).days
+
+    #user['created'] = dateutil.parser.parse(user['created'])
+
 
 
     return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit})
