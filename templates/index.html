@@ -22,10 +22,18 @@ Enter a Wikipedia username below to get started!
 {% endif %}
 
 
-{% if message %}
+{% if message == "usernotfound"%}
 <div id="usernotfound">
   <h3>Oh No!</h1>
   <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
+  </p>
+</div>
+{% endif %}
+
+{% if message == "baduser" %}
+<div id="baduser">
+  <h3>Oh My!</h1>
+  <p>We're sorry, but this is an invalid user
   </p>
 </div>
 {% endif %}
