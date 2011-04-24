@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_protect
 from django.template import RequestContext
 
+import json
 import urllib
 import dateutil
 from dateutil import parser
@@ -22,13 +23,14 @@ def user_submit(request, username):
     """
     url_base    = "http://en.wikipedia.org/w/api.php?action=query&format=json"
     meta    = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
-    edits   = "&list=usercontribs&uclimit=100&ucnamespace=0&ucuser="
+    edits   = "&list=usercontribs&uclimit=10&ucnamespace=0&ucuser="
 
     url_meta = url_base + meta + username
     url_edits = url_base + edits + username
 
     resp = urllib.urlopen(url_meta)
-    meta_data = eval( resp.read() )
+    meta_data = json.loads(resp.read() )
+    print meta_data
     resp.close()
 
     if meta_data['query']['users'][0].has_key('missing'):
@@ -37,7 +39,8 @@ def user_submit(request, username):
         return render(request, 'index.html', {'message': True})
     
     resp = urllib.urlopen(url_edits)
-    edits_data = eval( resp.read() )
+    edits_data = json.loads( resp.read() )
+    print edits_data
     resp.close()
 
     # clean up metadata
