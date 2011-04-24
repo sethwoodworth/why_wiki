@@ -15,7 +15,7 @@
 Their last edit was <b>{{ last_edit }}</b> days ago
 </p>
 <hr />
-{{ user }}
+{{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
 <br/>
 <ul>
 {% for edit in edits %}
