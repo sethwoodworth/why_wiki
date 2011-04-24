@@ -6,11 +6,11 @@
 body {
     font-family: 'Droid Serif', arial, serif;
     font-size: 20px;
+    color: #503e2b;
     background-image: url("https://openhatch.org/static/images/motif-eee.png");
     position: relative;
     margin: 0px;
-}
-
+    }
 input {
     width: 500px;
     height: 53px;
@@ -28,7 +28,7 @@ h1,h2,h3 {
     }
 #content {
     width: 700px; margin: auto;
-  }
+    }
 #footer {
     align: center;
     width: 100%;
@@ -36,14 +36,25 @@ h1,h2,h3 {
     padding: 0px;
     top: 0px;
     padding: 3px 0px 0px 0px;
-}
+    }
+#icons {
+    
+    }
+#wikipedia {
+    float:left;
+    height:110px;
+    }
+#license {
+    float:right;
+    height:110px;
+    }
 .active{
     color:green;
     }
 .inactive{
     color:red;
     }
-.error { 
+.error {
     color:red;
     font-style:italic;
     border-style: dashed;
@@ -84,10 +95,20 @@ function OnSubmitForm()
 <div style="margin: auto; width: 600px;"> a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
 </div>
 
-<a href="http://en.wikipedia.org/"><img src='/static/Wikipedia-logo-v2-en.png'></a>
-<br/>
-<a href="http://upload.wikimedia.org/wikipedia/commons/d/d6/Wikipedia-logo-v2-en.png"><small>source</small></a>
+<div id="icons">
+    <div id="wikipedia">
+        <a href="http://en.wikipedia.org/">
+        <img src='/static/Wikipedia-logo-v2-en_SVG.svg'></a>
+        <br/>
+        <a href="http://wikimediafoundation.org/wiki/File:Wikipedia-logo-v2-en_SVG.svg"><small>source</small></a>
+    </div> <!-- wikipedia -->
+    <div id="license">
+        <a href="">
+        <img style="height:120px;" src="/static/Affero_General_Public_License_3_Logo.svg"/>
+        </a>
+    </div> <!-- license -->
 
+</div> <!-- icons -->
 
 </div> <!-- footer -->
 </body>

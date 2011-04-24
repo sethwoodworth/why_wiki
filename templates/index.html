@@ -5,19 +5,19 @@
   <h1>4 Wikipedians</h1>
   <h3>Helping you </h3>
   <p>
-    Wikipedia is <em>our</em> project, <em>yours and mine</em>, and 4 Wikipedians is here to encourage participation! 4 Wikipedians can help you contribute by 
-letting 
-you 
-know 
-when you are 
-being 
-an 
-active editor and when you're not with lots of fun statistics and suggestions on pages that could use your help. 
+    Wikipedia is <em>our</em> project, <em>yours and mine</em>, and 4 Wikipedians is here to encourage participation! 4 Wikipedians can help you contribute by
+letting
+you
+know
+when you are
+being
+an
+active editor and when you're not with lots of fun statistics and suggestions on pages that could use your help.
 </p>
 
 {% if not message %}
 <p>
-Enter a Wikipedia username below to get started! 
+Enter a Wikipedia username below to get started!
 </p>
 {% endif %}
 
@@ -37,7 +37,7 @@ Enter a Wikipedia username below to get started!
 </div>
 {% endif %}
 
-  
+
   <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
       {% csrf_token %}
       <input type="text"/>
