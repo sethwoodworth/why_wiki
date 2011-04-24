@@ -30,7 +30,7 @@ def user_submit(request, username):
 
     resp = urllib.urlopen(url_meta)
     meta_data = json.loads(resp.read() )
-    print meta_data
+    #print meta_data
     resp.close()
 
     if meta_data['query']['users'][0].has_key('missing'):
@@ -40,7 +40,7 @@ def user_submit(request, username):
     
     resp = urllib.urlopen(url_edits)
     edits_data = json.loads( resp.read() )
-    print edits_data
+    #print edits_data
     resp.close()
 
     # clean up metadata
