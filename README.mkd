@@ -1,0 +1,38 @@
+Edit moar!
+---------------
+
+Easy to do (with data on hand)
+========
+days since last edit  //have
+edits in last month
+total edits //have
+list of recently edited pages
+is blocked?
+how many days until you have to edit again (to keep stated goal (currently 5/mo)) //+1
+
+Needs all a user's edits
+=================
+### Easier ###
+edits per month //bias for n months?
+your edit frequency //day, month, year? --> edits per month //graphable
+Full list of pages you've edited //list of pages not edited
+Common categories of pages you've edited
+what % of edits have comment // only show if below threshold ?
+pagination of edit history //semi-off-topic
+pages created
+number of comment edits //currently not pulling comment edits
+days in a row edited w/o breaking the chain (http://calendaraboutnothing.com/) //achievement :D
+
+### Harder ###
+changes edited/reverted // +1! //possibly difficult //update: Really difficult
+editor level //what perms // group membership
+your edit frequency vs the rest of WP //needs overall data : source? (create in house?)
+achievements //neat badges for more secondary stats? //semi-off-topic
+pages created vs. rest of WP //source?
+images uploaded / edited
+images added to pages // hard or easy, I think hard
+sources/references added
+Who you've left messages for, who's left messages for you
+translations //possible extending beyond en.wiki
+// It's not a bad idea, there is a feature for this
+
