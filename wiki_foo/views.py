@@ -52,9 +52,14 @@ def user_submit(request, username):
             "gender": meta_data['query']['users'][0]['gender'],
             "userid": meta_data['query']['users'][0]['userid'],
             "active": False,
+            "blocked": False,
             }
     except:
-        return render(request, 'index.html', {'message': "baduser"})
+        if not meta_data['query']['users'][0].has_key('editcount'):
+            return render(request, 'index.html', {'message': "baduser"})
+        else:
+            return render(request, 'index.html', {'message': "blocked"})
+
     
     # clean up edits
     edits = []
@@ -65,6 +70,7 @@ def user_submit(request, username):
             'comment': edit['comment'],
             }
         edits.append(e)
+
 
     if len(edits) >=5:
         # is active?
@@ -78,6 +84,8 @@ def user_submit(request, username):
     last_edit = (datetime.utcnow() - last_naive).days
 
     #user['created'] = dateutil.parser.parse(user['created'])
+    if meta_data['query']['users'][0].has_key('blockedby'):
+        user['blocked'] = True
 
 
 
