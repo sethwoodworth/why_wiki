@@ -55,6 +55,8 @@ def user_submit(request, username):
             "active": False,
             "this_mo": 0,
             "blocked": False,
+            "remainactiveamt": 0,
+            "remainactivedays": 0,
             }
     except:
         if not meta_data['query']['users'][0].has_key('editcount'):
@@ -79,13 +81,13 @@ def user_submit(request, username):
         fifth_edit = edits[4]['timestamp']
         if (datetime.utcnow() - fifth_edit).days < 31:
             user['active'] = True
-
+            user['remainactiveamt'] = 1
+        for i in range(0, 4):
+            if(edits[i]['timestamp'].day == edits[4]['timestamp'].day):
+                user['remainactiveamt'] += 1
+        user['remainactivedays'] = 31 - (datetime.utcnow() - edits[4]['timestamp']).days
     # Last edit was how long ago?
     last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
-
-    # TODO: what does this do?
-    if meta_data['query']['users'][0].has_key('blockedby'):
-        user['blocked'] = True
 
 
     # edits last mo?
@@ -97,5 +99,13 @@ def user_submit(request, username):
         if (datetime.utcnow() - edit['timestamp']).days < 31:
             edit['this_mo'] = True
             user['this_mo'] += 1
+
+    if not user['active']: #checks how many edits to become active
+        user['remainactiveamt'] = 5 - user['this_mo']
+        user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
+
+    # checks if user is blocked
+    if meta_data['query']['users'][0].has_key('blockedby'):
+        user['blocked'] = True
 
     return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit})
