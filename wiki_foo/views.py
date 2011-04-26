@@ -19,11 +19,12 @@ def root(request):
 @csrf_protect
 def user_submit(request, username):
     """
-    Api calls for user meta data and 100 edits. Parse this and return a page of stats.
+    Api calls for user meta data and N edits. Parse this and return a page of stats.
     """
     url_base    = "http://en.wikipedia.org/w/api.php?action=query&format=json"
     meta    = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
-    edits   = "&list=usercontribs&uclimit=10&ucnamespace=0&ucuser="
+    count = 35
+    edits   = "&list=usercontribs&uclimit=" + str(count) + "&ucnamespace=0&ucuser="
 
     url_meta = url_base + meta + username
     url_edits = url_base + edits + username
@@ -43,7 +44,7 @@ def user_submit(request, username):
     #print edits_data
     resp.close()
 
-    # clean up metadata
+    ## Parse and cleanup metadata
     try:
         user = {
             "username": username,
@@ -52,33 +53,39 @@ def user_submit(request, username):
             "gender": meta_data['query']['users'][0]['gender'],
             "userid": meta_data['query']['users'][0]['userid'],
             "active": False,
+            "this_mo": 0,
             }
     except:
         return render(request, 'index.html', {'message': "baduser"})
     
-    # clean up edits
     edits = []
     for edit in edits_data['query']['usercontribs']:
         e = {
             'pagename': edit['title'],
-            'timestamp': dateutil.parser.parse(edit['timestamp']),
+            'timestamp': dateutil.parser.parse(edit['timestamp'], ignoretz=True),
             'comment': edit['comment'],
+            'this_mo': False,
             }
         edits.append(e)
 
+    ## Decifer datum
+    # Is user active?
     if len(edits) >=5:
-        # is active?
-        fifth_edit_aware = edits[4]['timestamp']
-        fifth_naive = fifth_edit_aware.replace(tzinfo=None)
-        if (datetime.utcnow() - fifth_naive).days < 31:
+        fifth_edit = edits[4]['timestamp']
+        if (datetime.utcnow() - fifth_edit).days < 31:
             user['active'] = True
 
-    last_edit_aware = edits[0]['timestamp']
-    last_naive = last_edit_aware.replace(tzinfo=None)
-    last_edit = (datetime.utcnow() - last_naive).days
+    # Last edit was how long ago?
+    last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
 
-    #user['created'] = dateutil.parser.parse(user['created'])
-
-
+    # edits last mo?
+    for edit in edits:
+        print type(datetime.utcnow())
+        print datetime.utcnow()
+        print type(edit['timestamp'])
+        print edit['timestamp']
+        if (datetime.utcnow() - edit['timestamp']).days < 31:
+            edit['this_mo'] = True
+            user['this_mo'] += 1
 
     return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit})

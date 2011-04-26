@@ -15,14 +15,14 @@
 {% endif %}
 </p>
 <p>
-Their last edit was <b>{{ last_edit }}</b> days ago
+Their last edit was <b>{{ last_edit }}</b> days ago {% if user.this_mo > 1 %} and they've edited {{ user.this_mo }} times this month{% endif %}.
 </p>
 <hr />
 {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
 <br/>
 <ul>
 {% for edit in edits %}
-    <li><a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} : {{ edit.comment }}</li>
+    <li><a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} : {{ edit.comment }} -- {{ edit.this_mo }}</li>
 {% endfor %}
 </ul>
 <br/>
