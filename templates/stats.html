@@ -13,6 +13,13 @@
 {% if not user.active %}
 <br>All you need are five edits a month to be an active editor! Anyone can do it!
 {% endif %}
+
+{% if user.blocked %}
+<div class="error">
+  <h3 style="display:inline;">Oh No! Oh My!</h3>
+  Bitch got banned
+</div>
+{% endif %}
 </p>
 <p>
 Their last edit was <b>{{ last_edit }}</b> days ago {% if user.this_mo > 1 %} and they've edited {{ user.this_mo }} times this month{% endif %}.

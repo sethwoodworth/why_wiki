@@ -54,9 +54,14 @@ def user_submit(request, username):
             "userid": meta_data['query']['users'][0]['userid'],
             "active": False,
             "this_mo": 0,
+            "blocked": False,
             }
     except:
-        return render(request, 'index.html', {'message': "baduser"})
+        if not meta_data['query']['users'][0].has_key('editcount'):
+            return render(request, 'index.html', {'message': "baduser"})
+        else:
+            return render(request, 'index.html', {'message': "blocked"})
+
     
     edits = []
     for edit in edits_data['query']['usercontribs']:
@@ -77,6 +82,11 @@ def user_submit(request, username):
 
     # Last edit was how long ago?
     last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
+
+    # TODO: what does this do?
+    if meta_data['query']['users'][0].has_key('blockedby'):
+        user['blocked'] = True
+
 
     # edits last mo?
     for edit in edits:
