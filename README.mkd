@@ -4,10 +4,10 @@ Edit moar!
 Easy to do (with data on hand)
 ========
 + days since last edit (have) ✓
-- edits in last month
++ edits in last month ✓
 + total edits ✓
++ is blocked? ✓
 - list of recently edited pages
-- is blocked?
 - how many days until you have to edit again (to keep stated goal, currently 5/mo)
 
 Needs all a user's edits
