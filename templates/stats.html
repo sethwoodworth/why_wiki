@@ -9,31 +9,44 @@
   </form>
 
 <p>
-{{ user.username }} <strong class={% if user.active %} "active">is {% else %}"inactive">is not {% endif %}</strong> an active editor.
-{% if not user.active %}
-<br>All you need are five edits a month to be an active editor! Anyone can do it!
-{% endif %}
-{% if user.blocked %}
-<div class="error">
-  <h3 style="display:inline;">Oh No! Oh My!</h3>
-  Punk got banned
-</div>
-{% endif %}
-</p>
-<p>
-Their last edit was <b>{{ last_edit }}</b> days ago {% if user.this_mo > 1 %} and they've edited {{ user.this_mo }} times this month{% endif %}.
-</p>
-<p>
-{% if user.active %} To remain active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days {% endif%}
-{% if not user.active %} To become active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days {% endif%}
 
-<hr />
-{{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
-<br/>
+
+<div id="left">
+<h3>{{ user.username }}</h3>
+  <p>
+    {{ user.username }} <em><strong class=
+      {% if user.active %} "active">
+        is
+      {% else %}"inactive">is not
+    {% endif %}</strong> an active editor.</em>
+    {% if user.blocked %}
+    <div class="error">
+      <h3 style="display:inline;">Oh No! Oh My!</h3>
+      Punk got banned
+    </div>
+    {% endif %}
+  </p>
+  <p>
+    Their last edit was <b>{{ last_edit }}</b> days ago {% if user.this_mo > 1 %} and they've edited {{ user.this_mo }} times this month{% endif %}.
+  </p>
+  <p>
+    {% if user.active %} To remain active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days
+    {% else %} To become active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days 
+    {% endif%}
+  </p>
+
+  <hr />
+    {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
+  <br/>
+</div> {# div id="left"#}
+
+<div id="right">
+  <h3>foobie blech</h3>
 <ul>
 {% for edit in edits %}
     <li><a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} : {{ edit.comment }} -- {{ edit.this_mo }}</li>
 {% endfor %}
 </ul>
 <br/>
+</div>
 {% endblock %}
