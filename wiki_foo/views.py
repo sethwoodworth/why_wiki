@@ -103,6 +103,8 @@ def user_submit(request, username):
     if not user['active']: #checks how many edits to become active
         user['remainactiveamt'] = 5 - user['this_mo']
         user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
+        if user['remainactivedays'] < 0:
+            user['remainactivedays'] = 31
 
     # checks if user is blocked
     if meta_data['query']['users'][0].has_key('blockedby'):
