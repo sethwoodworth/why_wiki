@@ -100,6 +100,13 @@ def user_submit(request, username):
             edit['this_mo'] = True
             user['this_mo'] += 1
 
+    edits_in_row = 0
+    for x in range(0, len(edits)-2)
+        if(edits[x+1]['timestamp'] - edits[x]['timestamp']).days <=1:
+            edits_in_row++
+        else:
+            break
+
     if not user['active']: #checks how many edits to become active
         user['remainactiveamt'] = 5 - user['this_mo']
         user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
