@@ -66,6 +66,7 @@ def user_submit(request, username):
 
     
     edits = []
+    titles = []
     for edit in edits_data['query']['usercontribs']:
         e = {
             'pagename': edit['title'],
@@ -73,7 +74,33 @@ def user_submit(request, username):
             'comment': edit['comment'],
             'this_mo': False,
             }
+        d = {
+            'pagename': edit['title'],
+            'created': False,
+            }
         edits.append(e)
+        titles.append(d)
+
+#BEGIN: work on determining if a user created a page
+#unduplicates titles, so we do not double-request revision info
+    if titles:
+        titles.sort()
+        last = titles[-1]
+        for i in range(len(titles)-2, -1, -1):
+            if last == titles[i]:
+                del titles[i]
+            else:
+                last = titles[i]
+#actually request First Revision (creation) of a page  
+#NB: url breaks on trying for Really Long page names eg. Berkman Center for.... gets truncated
+    #for title in titles:
+        #revisions = "&prop=revisions&titles="+str(title['pagename'])+"&rvprop=user&rvdir=newer&rvlimit=1"
+        #url_revisions = url_base + revisions
+        #resp = urllib.urlopen(url_revisions)
+        #revision_data = json.loads( resp.read() )
+        #resp.close()
+        #print revision_data
+
 
     ## Decifer datum
     # Is user active?
@@ -95,10 +122,10 @@ def user_submit(request, username):
 
     # edits last mo?
     for edit in edits:
-        print type(datetime.utcnow())
-        print datetime.utcnow()
-        print type(edit['timestamp'])
-        print edit['timestamp']
+        #print type(datetime.utcnow())
+        #print datetime.utcnow()
+        #print type(edit['timestamp'])
+        #print edit['timestamp']
         if (datetime.utcnow() - edit['timestamp']).days < 31:
             edit['this_mo'] = True
             user['this_mo'] += 1
