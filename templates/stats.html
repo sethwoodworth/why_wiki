@@ -34,6 +34,9 @@
     {% else %} To become active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days 
     {% endif%}
   </p>
+  <p>
+    They have made {{ edits_in_row }} edits in a row
+  </p>
 
   <hr />
     {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits

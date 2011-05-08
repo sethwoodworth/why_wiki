@@ -101,9 +101,9 @@ def user_submit(request, username):
             user['this_mo'] += 1
 
     edits_in_row = 0
-    for x in range(0, len(edits)-2)
+    for x in range(0, (len(edits)-1)):
         if(edits[x+1]['timestamp'] - edits[x]['timestamp']).days <=1:
-            edits_in_row++
+            edits_in_row += 1
         else:
             break
 
@@ -117,4 +117,4 @@ def user_submit(request, username):
     if meta_data['query']['users'][0].has_key('blockedby'):
         user['blocked'] = True
 
-    return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit})
+    return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit, "edits_in_row": edits_in_row})
