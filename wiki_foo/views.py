@@ -87,7 +87,10 @@ def user_submit(request, username):
                 user['remainactiveamt'] += 1
         user['remainactivedays'] = 31 - (datetime.utcnow() - edits[4]['timestamp']).days
     # Last edit was how long ago?
-    last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
+    if len(edits) > 0:
+        last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
+    else:
+        last_edit = 0
 
 
     # edits last mo?
@@ -112,7 +115,8 @@ def user_submit(request, username):
 
     if not user['active']: #checks how many edits to become active
         user['remainactiveamt'] = 5 - user['this_mo']
-        user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
+        if len(edits) > 0:
+            user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
         if user['remainactivedays'] < 0:
             user['remainactivedays'] = 31
 
