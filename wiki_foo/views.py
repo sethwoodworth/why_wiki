@@ -100,9 +100,12 @@ def user_submit(request, username):
             edit['this_mo'] = True
             user['this_mo'] += 1
 
+    #calculating days in a row edits have been made since last edit
     edits_in_row = 0
     for x in range(0, (len(edits)-1)):
-        if(edits[x+1]['timestamp'] - edits[x]['timestamp']).days <=1:
+        if((edits[x]['timestamp']).day - (edits[x+1]['timestamp']).day) == 0:
+            edits_in_row += 0
+        elif((edits[x]['timestamp']).day - (edits[x+1]['timestamp']).day) == 1:
             edits_in_row += 1
         else:
             break
