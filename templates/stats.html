@@ -34,20 +34,29 @@
     {% else %} To become active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days 
     {% endif%}
   </p>
-  <p>
-    They have made {{ edits_in_row }} edits in a row
-  </p>
-
   <hr />
+  <p>
     {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
-  <br/>
+  </p>
+  {% if edits_in_row > 0 %}
+  <hr/>
+  <p>
+    They have made at least one edit per day for {{ edits_in_row }} days in a row.
+  </p>
+  {% else %}
+  {% endif %}
+
 </div> {# div id="left"#}
 
 <div id="right">
   <h3>foobie blech</h3>
 <ul>
 {% for edit in edits %}
-    <li><a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} : {{ edit.comment }} -- {{ edit.this_mo }}</li>
+  <li>
+    <a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">[[ {{ edit.pagename }} ]]</a> -- {{ edit.timestamp }} :
+    <br/>
+    &ldquo;{{ edit.comment }}&rdquo;
+  </li>
 {% endfor %}
 </ul>
 <br/>
