@@ -35,3 +35,10 @@ Needs all a user's edits
 - Who you've left messages for, who's left messages for you
 - translations //possible extending beyond en.wiki
 - // It's not a bad idea, there is a feature for this
+
+
+
+Install/develop
+===============
+Needs the following packages (in ubuntu):
+    python-dateutil
