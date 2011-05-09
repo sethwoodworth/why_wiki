@@ -19,7 +19,7 @@
         is
       {% else %}"inactive">is not
     {% endif %}</strong> an active editor.</em>
-    {% if user.blocked %}
+    {% if blocked %}
     <div class="error">
       <h3 style="display:inline;">Oh No! Oh My!</h3>
       Punk got banned
@@ -38,13 +38,6 @@
   <p>
     {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
   </p>
-  {% if edits_in_row > 0 %}
-  <hr/>
-  <p>
-    They have made at least one edit per day for {{ edits_in_row }} days in a row.
-  </p>
-  {% else %}
-  {% endif %}
 
 </div> {# div id="left"#}
 

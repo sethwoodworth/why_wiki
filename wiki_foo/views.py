@@ -9,6 +9,108 @@ import dateutil
 from dateutil import parser
 from datetime import datetime
 
+class Wikistats(object):
+    def __init__(self, username):
+        #globals
+        self.url_base = "http://en.wikipedia.org/w/api.php?action=query&format=json"
+        #userdata
+        self.username = username
+        self.user = None #this may or may not be set in fetch_user :: use self.valid_user to insure
+        self.edits = []
+        self.last_edit = None
+        #validation
+        self.blocked = False
+        self.valid_user = False
+
+    def fetch_user(self):
+        #print "fetching user"
+        meta = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
+
+        url_meta = self.url_base + meta + self.username
+        #print url_meta
+
+        resp = urllib.urlopen(url_meta)
+        meta_data = json.loads( resp.read() )
+        #print meta_data
+        resp.close()
+        
+        try:
+            #print "trying user"
+            #print self.username
+            self.user = {
+                "username": self.username,
+                "created": dateutil.parser.parse(meta_data['query']['users'][0]['registration']),
+                "editcount": meta_data['query']['users'][0]['editcount'],
+                "gender": meta_data['query']['users'][0]['gender'],
+                "userid": meta_data['query']['users'][0]['userid'],
+                "active": False,
+                "this_mo": 0,
+                "remainactiveamt": 0,
+                "remainactivedays": 0,
+            }
+            self.valid_user = True
+        
+        #normally these would halt and kick back to main page
+        except:
+            if not meta_data['query']['users'][0].has_key('editcount'):
+                self.valid_user = False
+                #print "invalid user"
+            elif meta_data['query']['users'][0].has_key('blockedby'):
+                self.blocked = True
+                #print "blocked user"
+        
+        #print "user fetched"
+        #print self.valid_user
+
+    def fetch_edits(self, revs=35):
+        edit_url_append = "&list=usercontribs&uclimit=" + str(revs) + "&ucnamespace=0&ucuser="
+
+        url_edits = self.url_base + edit_url_append + self.username
+
+        resp = urllib.urlopen(url_edits)
+        edits_data = json.loads( resp.read() )
+        #print edits_data
+        resp.close()
+        
+        for edit in edits_data['query']['usercontribs']:
+            e = {
+                'pagename': edit['title'],
+                'timestamp': dateutil.parser.parse(edit['timestamp'], ignoretz=True),
+                'comment': edit['comment'],
+                'this_mo': False,
+                }
+            self.edits.append(e)
+        
+    def check_active(self):
+        if len(self.edits) >=5:
+            fifth_edit = self.edits[4]['timestamp']
+            if (datetime.utcnow() - fifth_edit).days < 31:
+                self.user['active'] = True
+                self.user['remainactiveamt'] = 1
+            for i in range(0, 4):
+                if(self.edits[i]['timestamp'].day == self.edits[4]['timestamp'].day):
+                    self.user['remainactiveamt'] += 1
+            self.user['remainactivedays'] = 31 - (datetime.utcnow() - self.edits[4]['timestamp']).days
+        # Last edit was how long ago?
+        if len(self.edits) > 0:
+            self.last_edit = (datetime.utcnow() - self.edits[0]['timestamp']).days
+        else:
+            self.last_edit = 0
+            
+    def become_active(self):  #dependant on this_mo info -- calculated in edits_last_month
+        if not self.user['active']: #checks how many edits to become active
+            self.user['remainactiveamt'] = 5 - self.user['this_mo']
+            if len(edits) > 0:
+                self.user['remainactivedays'] = 31 - (datetime.utcnow() - self.edits[self.user['this_mo']-1]['timestamp']).days
+            if self.user['remainactivedays'] < 0:
+                self.user['remainactivedays'] = 31
+            
+    def edits_last_month(self):
+        for edit in self.edits:
+            if (datetime.utcnow() - edit['timestamp']).days < 31:
+                edit['this_mo'] = True
+                self.user['this_mo'] += 1
+
 @csrf_protect
 def root(request):
     """
@@ -16,139 +118,22 @@ def root(request):
     """
     return render(request, 'index.html', {})
 
-@csrf_protect
+csrf_protect
 def user_submit(request, username):
     """
     Api calls for user meta data and N edits. Parse this and return a page of stats.
     """
-    url_base    = "http://en.wikipedia.org/w/api.php?action=query&format=json"
-    meta    = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
-    count = 35
-    edits   = "&list=usercontribs&uclimit=" + str(count) + "&ucnamespace=0&ucuser="
-
-    url_meta = url_base + meta + username
-    url_edits = url_base + edits + username
-
-    resp = urllib.urlopen(url_meta)
-    meta_data = json.loads(resp.read() )
-    #print meta_data
-    resp.close()
-
-    if meta_data['query']['users'][0].has_key('missing'):
-        # non-users return json with a 'missing' key
-        # break this method, and render another index, but with an error message
-        return render(request, 'index.html', {'message': "usernotfound"})
-    
-    resp = urllib.urlopen(url_edits)
-    edits_data = json.loads( resp.read() )
-    #print edits_data
-    resp.close()
-
-    ## Parse and cleanup metadata
-    try:
-        user = {
-            "username": username,
-            "created": dateutil.parser.parse(meta_data['query']['users'][0]['registration']),
-            "editcount": meta_data['query']['users'][0]['editcount'],
-            "gender": meta_data['query']['users'][0]['gender'],
-            "userid": meta_data['query']['users'][0]['userid'],
-            "active": False,
-            "this_mo": 0,
-            "blocked": False,
-            "remainactiveamt": 0,
-            "remainactivedays": 0,
-            }
-    except:
-        if not meta_data['query']['users'][0].has_key('editcount'):
-            return render(request, 'index.html', {'message': "baduser"})
-        else:
-            return render(request, 'index.html', {'message': "blocked"})
-
-    
-    edits = []
-    titles = []
-    for edit in edits_data['query']['usercontribs']:
-        e = {
-            'pagename': edit['title'],
-            'timestamp': dateutil.parser.parse(edit['timestamp'], ignoretz=True),
-            'comment': edit['comment'],
-            'this_mo': False,
-            }
-        d = {
-            'pagename': edit['title'],
-            'created': False,
-            }
-        edits.append(e)
-        titles.append(d)
-
-#BEGIN: work on determining if a user created a page
-#unduplicates titles, so we do not double-request revision info
-    if titles:
-        titles.sort()
-        last = titles[-1]
-        for i in range(len(titles)-2, -1, -1):
-            if last == titles[i]:
-                del titles[i]
-            else:
-                last = titles[i]
-#actually request First Revision (creation) of a page  
-#NB: url breaks on trying for Really Long page names eg. Berkman Center for.... gets truncated
-    #for title in titles:
-        #revisions = "&prop=revisions&titles="+str(title['pagename'])+"&rvprop=user&rvdir=newer&rvlimit=1"
-        #url_revisions = url_base + revisions
-        #resp = urllib.urlopen(url_revisions)
-        #revision_data = json.loads( resp.read() )
-        #resp.close()
-        #print revision_data
-
-
-    ## Decifer datum
-    # Is user active?
-    if len(edits) >=5:
-        fifth_edit = edits[4]['timestamp']
-        if (datetime.utcnow() - fifth_edit).days < 31:
-            user['active'] = True
-            user['remainactiveamt'] = 1
-        for i in range(0, 4):
-            if(edits[i]['timestamp'].day == edits[4]['timestamp'].day):
-                user['remainactiveamt'] += 1
-        user['remainactivedays'] = 31 - (datetime.utcnow() - edits[4]['timestamp']).days
-    # Last edit was how long ago?
-    if len(edits) > 0:
-        last_edit = (datetime.utcnow() - edits[0]['timestamp']).days
+    dude = Wikistats(username)
+    print username
+    dude.fetch_user()
+    if(dude.valid_user):
+        dude.fetch_edits()
+        dude.check_active()
+        dude.edits_last_month()
+        dude.become_active()
+        return render(request, 'stats.html', {"user": dude.user, "edits": dude.edits, "last_edit": dude.last_edit, "blocked": dude.blocked})
     else:
-        last_edit = 0
-
-
-    # edits last mo?
-    for edit in edits:
-        #print type(datetime.utcnow())
-        #print datetime.utcnow()
-        #print type(edit['timestamp'])
-        #print edit['timestamp']
-        if (datetime.utcnow() - edit['timestamp']).days < 31:
-            edit['this_mo'] = True
-            user['this_mo'] += 1
-
-    #calculating days in a row edits have been made since last edit
-    edits_in_row = 0
-    for x in range(0, (len(edits)-1)):
-        if((edits[x]['timestamp']).day - (edits[x+1]['timestamp']).day) == 0:
-            edits_in_row += 0
-        elif((edits[x]['timestamp']).day - (edits[x+1]['timestamp']).day) == 1:
-            edits_in_row += 1
+        if(dude.blocked):
+            return render(request, 'index.html', {'message': "blocked"})
         else:
-            break
-
-    if not user['active']: #checks how many edits to become active
-        user['remainactiveamt'] = 5 - user['this_mo']
-        if len(edits) > 0:
-            user['remainactivedays'] = 31 - (datetime.utcnow() - edits[user['this_mo']-1]['timestamp']).days
-        if user['remainactivedays'] < 0:
-            user['remainactivedays'] = 31
-
-    # checks if user is blocked
-    if meta_data['query']['users'][0].has_key('blockedby'):
-        user['blocked'] = True
-
-    return render(request, 'stats.html', {"user": user, "edits": edits, "last_edit": last_edit, "edits_in_row": edits_in_row})
+            return render(request, 'index.html', {'message': "baduser"})
