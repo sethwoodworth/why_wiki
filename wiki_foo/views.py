@@ -100,7 +100,7 @@ class Wikistats(object):
     def become_active(self):  #dependant on this_mo info -- calculated in edits_last_month
         if not self.user['active']: #checks how many edits to become active
             self.user['remainactiveamt'] = 5 - self.user['this_mo']
-            if len(edits) > 0:
+            if len(self.edits) > 0:
                 self.user['remainactivedays'] = 31 - (datetime.utcnow() - self.edits[self.user['this_mo']-1]['timestamp']).days
             if self.user['remainactivedays'] < 0:
                 self.user['remainactivedays'] = 31
