@@ -22,12 +22,12 @@ def user_submit(request, username):
     Api calls for user meta data and N edits. Parse this and return a page of stats.
     """
     url_base    = "http://en.wikipedia.org/w/api.php?action=query&format=json"
-    meta    = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
-    count = 35
-    edits   = "&list=usercontribs&uclimit=" + str(count) + "&ucnamespace=0&ucuser="
+    meta        = "&list=users&usprop=blockinfo|groups|editcount|registration|emailable|gender&ususers="
+    count       = 35
+    edits       = "&list=usercontribs&uclimit=" + str(count) + "&ucnamespace=0&ucuser="
 
-    url_meta = url_base + meta + username
-    url_edits = url_base + edits + username
+    url_meta    = url_base + meta + username
+    url_edits   = url_base + edits + username
 
     resp = urllib.urlopen(url_meta)
     meta_data = json.loads(resp.read() )
