@@ -2,114 +2,8 @@
 <head>
     <title>{% block user %} {% endblock %}Why Edit Wikipedia?</title>
 <!-- css start -->
-<style>
-body {
-    height: 100%;
-    font-family: Georga, serif;
-    font-size: 20px;
-    background-color: #D0C7FF;
-    position: relative;
-    margin: 0px;
-    }
-
-input {
-    width: 500px;
-    height: 53px;
-    font-family: 'Droid Serif', arial, serif;
-    font-size: 35px;
-    font-weight: bold;
-    line-height:-1.3;
-    border-radius: 15px;
-    background:#feffff;
-    }
-h3, form { }
-h1, h2, h3 {
-    font-family: 'Droid Sans', sans;
-    margin: 15px 0px 15px 0px;
-    color: #853D41;
-    }
-#wrapper {
-    width: 960px;
-    margin: auto;
-    height: auto !important;
-    background: #E9ECDA;
-    -moz-box-shadow: 0 8px 15px black;
-    -webkit-box-shadow: 0 8px 15px black;
-    box-shadow: 0 8px 15px black;
-    padding: 15px;
-    }
-#wrapper h1 {
-    margin: 20px 5px 0px 20px;
-    }
-#content {
-    width: 960px;
-    min-height: 100%;
-    position: relative;
-    }
-#left {
-    width: 366px;
-    background: #bcd;
-    float: left;
-    padding: 0px 0px 0px 1px;
-    }
-#right {
-    width: 592px;
-    background: #A9CCEF;
-    float:right;
-    btoom:  8px;
-    }
-#footer {
-    overflow:   hidden;
-    border-top: 3px solid #223344;
-    background-color: #B5B6AF;
-    text-align:      center;
-    clear:both;
-    width:      100%;
-    height:     200px
-    margin:     0px;
-    padding:    0px;
-    top:        0px;
-    padding:    3px 0px 0px 0px;
-    }
-#icons {
-    margin: auto;
-    display:block;
-    width:1000px;
-    background-color: blue;
-    }
-#wikipedia {
-    float:left;
-    height:100px;
-    }
-#license {
-    float:right;
-    height:100px;
-    }
-.active{
-    color:green;
-    }
-.inactive{
-    color:red;
-    }
-.error {
-    color:red;
-    font-style:italic;
-    border-style: dashed;
-    border-width: 1px;
-    background-color: #FEEFB3;
-    padding: 5px;
-    margin: 10px;
-    }
-#content em {
-    background: #CCDDBB;
-    }
-#content p {
-    margin: 0px 7px 3px 7px;
-    }
-small {
-    font-size:10pt;
-    }
-</style>
+<link rel="stylesheet" href="/s/style/reset.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="/s/style/style.css" type="text/css" media="screen" />
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 
 <!-- css end -->
@@ -135,6 +29,10 @@ $(document).ready(function() {
 <div id="wrapper">
 <div id="header">
   <h1>Are you editing Wikipedia?</h1>
+  <ul>
+    <li><a href="/signup/">sign up</a></li>
+    <li><a href="/login/">log in</a></li>
+  </ul>
   <hr />
 </div> <!-- #header -->
 <div id="content">
