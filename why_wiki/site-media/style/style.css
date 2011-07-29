@@ -24,6 +24,9 @@ h1 {
     line-height: 0.9em;
     margin-bottom: 0.9em;
 }
+h2 {
+    font-size: 1.34em;
+}
 
 input {
     width: 500px;
@@ -65,18 +68,38 @@ color: #853D41;
     min-height: 100%;
     position: relative;
     }
+.introtext {
+  margin: auto;
+  width: 600px;
+}
+.introtext p {
+  text-align: center;
+}
+.centralinput {
+  width:  500px;
+  margin: auto;
+}
 #left {
     width: 366px;
-    background: #bcd;
     float: left;
     padding: 0px 0px 0px 1px;
+    text-align: right;
     }
 #right {
     width: 592px;
-    background: #A9CCEF;
+    background: #E3E4E2;
     float:right;
-    btoom:  8px;
+    -moz-box-shadow:inset 0 0 5px Black;
+    -webkit-box-shadow:inset 0 0 5px Black;
+    box-shadow:inset 0 0 5px Black;
     }
+#innerright {
+    padding: 0 10px 0 10px;
+}
+#innerright li {
+    margin-bottom: 5px;
+}
+
 #footer {
     overflow:   hidden;
     border-top: 3px solid #223344;
@@ -127,4 +150,8 @@ color: #853D41;
     }
 small {
     font-size:10pt;
+    }
+
+.clear {
+    clear: both;
     }

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block username %} {{ user.username }} {% endblock %}
+
+{% block content%}
+
+  <script src="/s/scripts/jquery.timeago.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    function OnSubmitForm() {
+      document.myform.action = 'tryit/' + document.myform[1].value;
+      return true;
+    }
+
+    $(document).ready(function() {
+      $("abbr.timeago").timeago();
+    });
+  </script>
+  <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
+      {% csrf_token %}
+      <input type="text" value = "{{ user.username }}"/>
+      <input type="submit" value="Check!"/>
+  </form>
+
+
+
+<div id="left">
+<h3>user: {{ user.username }}</h3>
+  <p>
+    {{ user.username }} was created on {{ user.created }} and has {{ user.editcount }} edits
+  </p>
+  <p>
+    {{ user.username }} <em><strong class=
+      {% if user.active %} "active">
+        is
+      {% else %}"inactive">is not
+    {% endif %}</strong> an active editor.</em>
+    {% if blocked %}
+    <div class="error">
+      <h3 style="display:inline;">Oh No! Oh My!</h3>
+      Punk got banned
+    </div> <!-- .error -->
+    {% endif %}
+  </p>
+  <p>
+    Their last edit was <b>{{ last_edit }}</b> days ago {% if user.this_mo > 1 %} and they've edited {{ user.this_mo }} times this month{% endif %}.
+  </p>
+  <hr />
+  <p>
+    {% if user.active %} To remain active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days
+    {% else %} To become active they need {{ user.remainactiveamt }} posts in {{ user.remainactivedays }} days
+    {% endif%}
+  </p>
+  <hr />
+
+</div> <!-- #left -->
+
+<div id="right">
+  <div id="innerright">
+    <h3>Recent Edits</h3>
+    <ul>
+    {% for edit in edits %}
+      <li>
+        <a href="https://secure.wikimedia.org/wikipedia/en/wiki/{{ edit.pagename }}">
+        [[ {{ edit.pagename }} ]]</a> -- 
+        <span title="{{ edit.timestamp }}"><abbr class="timeago" title="{{ edit.timestamp|date:"c" }}"> </abbr></span> :
+        <br/>
+        &ldquo;{{ edit.comment }}&rdquo;
+      </li>
+    {% endfor %}
+    </ul>
+
+  <br/>
+  </div> <!-- #innerright -->
+  <div class="clear"></div>
+</div> <!-- #right -->
+<div class="clear"></div>
+{% endblock %}

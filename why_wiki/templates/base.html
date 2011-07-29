@@ -10,7 +10,7 @@
 
 <!-- javascript start -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
-<script src="/s/scripts/jquery.noisy.min.js"></script>
+<!--<script src="/s/scripts/jquery.noisy.min.js"></script> -->
 <script type="text/javascript">
 $(document).ready(function() {
     $('body').noisy()
@@ -21,23 +21,22 @@ $(document).ready(function() {
 </head>
 <body>
 <div id="wrapper">
-<div id="header">
-  <h1>Are you editing Wikipedia?</h1>
-  <ul>
-    <li><a href="/signup/">sign up</a></li>
-    <li><a href="/login/">log in</a></li>
-  </ul>
-  <hr />
-</div> <!-- #header -->
-<div id="content">
+  <div id="header">
+    <h1>Are you editing Wikipedia?</h1>
+    <ul>
+      <li><a href="/signup/">sign up</a></li>
+      <li><a href="/login/">log in</a></li>
+    </ul>
+    <hr />
+  </div> <!-- #header -->
 
-{% block content %}
+  <div id="content">
 
-<a href="http://en.wikipedia.org/"><img src='/s/imgs/Wikipedia-logo-v2-en.png'></a>
-<br/>
-<a href="http://upload.wikimedia.org/wikipedia/commons/d/d6/Wikipedia-logo-v2-en.png"><small>source</small></a>
-{% endblock %}
-</div> <!-- content -->
+  {% block content %}
+
+  {% endblock %}
+
+  </div> <!-- content -->
 </div> <!-- wrapper -->
 
 <div id="footer">
@@ -45,19 +44,19 @@ $(document).ready(function() {
     a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
   </div>
 
-<div id="icons">
-    <div id="wikipedia">
-        <a href="http://en.wikipedia.org/">
-        <img src='/s/imgs/Wikipedia-logo-v2-en_SVG.svg'></a>
-        <br/>
-        <a href="http://wikimediafoundation.org/wiki/File:Wikipedia-logo-v2-en_SVG.svg"><small>source</small></a>
-    </div> <!-- wikipedia -->
-    <div id="license">
-        <a href="">
-        <img style="height:100px;" src="/s/imgs/Affero_General_Public_License_3_Logo.svg"/>
-        </a>
-    </div> <!-- license -->
-</div> <!-- icons -->
+  <div id="icons">
+      <div id="wikipedia">
+          <a href="http://en.wikipedia.org/">
+          <img src='/s/imgs/Wikipedia-logo-v2-en_SVG.svg'></a>
+          <br/>
+          <a href="http://wikimediafoundation.org/wiki/File:Wikipedia-logo-v2-en_SVG.svg"><small>source</small></a>
+      </div> <!-- wikipedia -->
+      <div id="license">
+          <a href="">
+          <img style="height:100px;" src="/s/imgs/Affero_General_Public_License_3_Logo.svg"/>
+          </a>
+      </div> <!-- license -->
+  </div> <!-- icons -->
 </div> <!-- footer -->
 
 

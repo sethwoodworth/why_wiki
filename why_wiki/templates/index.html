@@ -2,54 +2,51 @@
 {% block username %}{% endblock %}
 
 {% block content%}
-  <h1>Are you editing Wikipedia?</h1>
-  <h3>Helping you </h3>
-  <p>
-    Wikipedia is <em>our</em> project, <em>yours and mine</em>, and 4 Wikipedians is here to encourage participation! 4 Wikipedians can help you contribute by
-letting
-you
-know
-when you are
-being
-an
-active editor and when you're not with lots of fun statistics and suggestions on pages that could use your help.
-</p>
+  <div class="introtext">
+    <h2>Helping you </h2>
+    <p>
+      Wikipedia is <em>our</em> project, <em>yours and mine</em>, and 4 Wikipedians is here to encourage participation! 4 Wikipedians can help you contribute by letting you know when you are being an active editor and when you're not with lots of fun statistics and suggestions on pages that could use your help.
+    </p>
+  </div> <!-- .introtext -->
 
-{% if not message %}
-<p>
-Enter a Wikipedia username below to get started!
-</p>
-{% endif %}
+  <div class="introtext">
+    {% if not message %}
+    <p>
+    Enter a Wikipedia username below to get started!
+    </p>
+    {% endif %}
 
 
-{% if message == "usernotfound"%}
-<div class="error">
-  <h3 style="display:inline;">Oh No!</h3>
-  <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
-  </p>
-</div> <!-- .error -->
-{% endif %}
+    {% if message == "usernotfound"%}
+    <div class="error">
+      <h3 style="display:inline;">Oh No!</h3>
+      <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
+      </p>
+    </div> <!-- .error -->
+    {% endif %}
 
-{% if message == "baduser" %}
-<div class="error">
-  <h3 style="display:inline;">Oh No! Oh My!</h3>
-  We're sorry, but this is an invalid user
-</div> <!-- .error -->
-{% endif %}
+    {% if message == "baduser" %}
+    <div class="error">
+      <h3 style="display:inline;">Oh No! Oh My!</h3>
+      We're sorry, but this is an invalid user
+    </div> <!-- .error -->
+    {% endif %}
 
-{% if message == "blocked" %}
-<div class="error">
-  <h3 style="display:inline;">Oh No! Oh My!</h3>
-  Punk got banned
-</div> <!-- .error -->
-{% endif %}
+    {% if message == "blocked" %}
+    <div class="error">
+      <h3 style="display:inline;">Oh No! Oh My!</h3>
+      Punk got banned
+    </div> <!-- .error -->
+    {% endif %}
+  </div> <!-- .introtext -->
 
-<script type="text/javascript">
-    function OnSubmitForm() {
-        document.myform.action = 'tryit/' + document.myform[1].value;
-        return true;
-    }
-</script>
+  <div class="centralinput">
+  <script type="text/javascript">
+      function OnSubmitForm() {
+          document.myform.action = 'tryit/' + document.myform[1].value;
+          return true;
+      }
+  </script>
 
 
   <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
@@ -57,5 +54,6 @@ Enter a Wikipedia username below to get started!
       <input type="text"/>
       <input type="submit" value="Check!"/>
   </form>
+  </div> <!-- .centralinput -->
 
 {% endblock %}
