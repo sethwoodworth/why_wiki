@@ -27,21 +27,21 @@ Enter a Wikipedia username below to get started!
   <h3 style="display:inline;">Oh No!</h3>
   <p>We're sorry, but we didn't find your user on Wikimedia!  Registration is free and easy, so <a href="http://en.wikipedia.org/w/index.php?title=Special:UserLogin&type=signup">Sign up here!</a>
   </p>
-</div>
+</div> <!-- .error -->
 {% endif %}
 
 {% if message == "baduser" %}
 <div class="error">
   <h3 style="display:inline;">Oh No! Oh My!</h3>
   We're sorry, but this is an invalid user
-</div>
+</div> <!-- .error -->
 {% endif %}
 
 {% if message == "blocked" %}
 <div class="error">
   <h3 style="display:inline;">Oh No! Oh My!</h3>
   Punk got banned
-</div>
+</div> <!-- .error -->
 {% endif %}
 
 
@@ -51,6 +51,5 @@ Enter a Wikipedia username below to get started!
       <input type="text"/>
       <input type="submit" value="Check!"/>
   </form>
-</div>
 
 {% endblock %}

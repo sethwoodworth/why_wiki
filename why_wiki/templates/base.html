@@ -7,11 +7,11 @@ body {
     height: 100%;
     font-family: Georga, serif;
     font-size: 20px;
-    color: #503e2b;
-    background: #E9ECDA;
+    background-color: #D0C7FF;
     position: relative;
     margin: 0px;
     }
+
 input {
     width: 500px;
     height: 53px;
@@ -28,9 +28,21 @@ h1, h2, h3 {
     margin: 15px 0px 15px 0px;
     color: #853D41;
     }
-#content {
+#wrapper {
     width: 960px;
     margin: auto;
+    height: auto !important;
+    background: #E9ECDA;
+    -moz-box-shadow: 0 8px 15px black;
+    -webkit-box-shadow: 0 8px 15px black;
+    box-shadow: 0 8px 15px black;
+    padding: 15px;
+    }
+#wrapper h1 {
+    margin: 20px 5px 0px 20px;
+    }
+#content {
+    width: 960px;
     min-height: 100%;
     position: relative;
     }
@@ -47,18 +59,23 @@ h1, h2, h3 {
     btoom:  8px;
     }
 #footer {
-    align:      center;
+    overflow:   hidden;
+    border-top: 3px solid #223344;
+    background-color: #B5B6AF;
+    text-align:      center;
+    clear:both;
     width:      100%;
+    height:     200px
     margin:     0px;
     padding:    0px;
     top:        0px;
     padding:    3px 0px 0px 0px;
     }
 #icons {
-    position: relative;
     margin: auto;
     display:block;
     width:1000px;
+    background-color: blue;
     }
 #wikipedia {
     float:left;
@@ -98,45 +115,59 @@ small {
 <!-- css end -->
 
 <!-- javascript start -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script src="/s/scripts/jquery.noisy.min.js"></script>
 <script type="text/javascript">
-function OnSubmitForm()
-{
+function OnSubmitForm() {
   document.myform.action = document.myform[1].value;
   return true;
 }
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('body').noisy()
+    });
 </script>
 <!-- javascript end -->
 
 </head>
 <body>
+<div id="wrapper">
+<div id="header">
+  <h1>Are you editing Wikipedia?</h1>
+  <hr />
+</div> <!-- #header -->
 <div id="content">
 
 {% block content %}
 
-<a href="http://en.wikipedia.org/"><img src='/static/Wikipedia-logo-v2-en.png'></a>
+<a href="http://en.wikipedia.org/"><img src='/s/imgs/Wikipedia-logo-v2-en.png'></a>
 <br/>
 <a href="http://upload.wikimedia.org/wikipedia/commons/d/d6/Wikipedia-logo-v2-en.png"><small>source</small></a>
 {% endblock %}
-</div>
-<div id="footer">
-<div style="margin: auto; width: 400px; font-size: 12px;"> a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
-</div>
+</div> <!-- content -->
+</div> <!-- wrapper -->
 
-</div> <!-- footer -->
+<div id="footer">
+  <div style="margin: auto; width: 400px; font-size: 12px;">
+    a hack by <a href="http://sethish.com">sethish</a>, <a href="">maxpev</a>, and <a href="">danny-san</a>. <a href="https://github.com/sethwoodworth/why_wiki">sauce on github</a>. licensed agpl
+  </div>
+
 <div id="icons">
     <div id="wikipedia">
         <a href="http://en.wikipedia.org/">
-        <img src='/static/Wikipedia-logo-v2-en_SVG.svg'></a>
+        <img src='/s/imgs/Wikipedia-logo-v2-en_SVG.svg'></a>
         <br/>
         <a href="http://wikimediafoundation.org/wiki/File:Wikipedia-logo-v2-en_SVG.svg"><small>source</small></a>
     </div> <!-- wikipedia -->
     <div id="license">
         <a href="">
-        <img style="height:100px;" src="/static/Affero_General_Public_License_3_Logo.svg"/>
+        <img style="height:100px;" src="/s/imgs/Affero_General_Public_License_3_Logo.svg"/>
         </a>
     </div> <!-- license -->
-
 </div> <!-- icons -->
+</div> <!-- footer -->
+
 
 </body>
 </html>
