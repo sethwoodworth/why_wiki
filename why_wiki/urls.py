@@ -11,8 +11,8 @@ urlpatterns = patterns('',
     (r'^(?P<username>[A-Za-z0-9. ]*)$', 'wiki_foo.views.user_submit'),
 
     # static files
-    (r'^static/(?P<path>.*)$', 'django.views.static.serve',
-        {'document_root':os.path.dirname(__file__) + "/static"}),
+    (r'^s/(?P<path>.*)$', 'django.views.static.serve',
+        {'document_root':os.path.dirname(__file__) + "/site-media/"}),
 
 
     # Uncomment the admin/doc line below to enable admin documentation:
