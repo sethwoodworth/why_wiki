@@ -129,44 +129,22 @@ def root(request):
     """
     return render(request, 'index.html', {})
 
-csrf_protect
-def user_submit(request, username):
+@csrf_protect
+def tryit(request, username):
     """
     Api calls for user meta data and N edits. Parse this and return a page of stats.
     """
     dude = Wikistats(username)
-    print username
+    #print username
     dude.fetch_user()
     if(dude.valid_user):
         dude.fetch_edits()
         dude.check_active()
         dude.edits_last_month()
         dude.become_active()
-        return render(request, 'stats.html', {"user": dude.user, "edits": dude.edits, "last_edit": dude.last_edit, "blocked": dude.blocked})
+        return render(request, 'tryit.html', {"user": dude.user, "edits": dude.edits, "last_edit": dude.last_edit, "blocked": dude.blocked})
     else:
         if(dude.blocked):
             return render(request, 'index.html', {'message': "blocked"})
         else:
             return render(request, 'index.html', {'message': "baduser"})
-"""
-    dude = Wikistats(username)
-    dude.fetch_user()
-
-    if( dude.valid_user ):
-        dude.fetch_edits()
-        dude.check_active()
-        dude.edits_last_month()
-        dude.become_active()
-        return render(request, 'stats.html', 
-                            {"user":        dude.user, 
-                            "edits":        dude.edits, 
-                            "last_edit":    dude.last_edit, 
-                            "blocked":      dude.blocked
-                    })
-
-    else:
-        if(dude.blocked):
-            return render(request, 'index.html', {'message': "blocked"})
-        else:
-            return render(request, 'index.html', {'message': "baduser"})
-"""

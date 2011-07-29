@@ -44,6 +44,12 @@ Enter a Wikipedia username below to get started!
 </div> <!-- .error -->
 {% endif %}
 
+<script type="text/javascript">
+    function OnSubmitForm() {
+        document.myform.action = 'tryit/' + document.myform[1].value;
+        return true;
+    }
+</script>
 
 
   <form name="myform" onsubmit="return OnSubmitForm();" method="POST">
